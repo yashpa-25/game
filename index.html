@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Multi-Game by Yash Patel - a futuristic browser gaming platform."
+    />
+    <title>Multi-Game | Yash Patel</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="spaceCanvas" aria-hidden="true"></canvas>
+    <div class="light-field" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <section id="authView" class="view auth-view active" aria-labelledby="authTitle">
+        <div class="brand-stage">
+          <div class="logo-orbit" aria-hidden="true">
+            <div class="orbit-ring ring-one"></div>
+            <div class="orbit-ring ring-two"></div>
+            <div class="orbit-ring ring-three"></div>
+            <div class="logo-3d">YP</div>
+          </div>
+          <p class="eyebrow">Yash Patel Presents</p>
+          <h1 id="authTitle">Multi-Game</h1>
+          <p class="brand-copy">
+            A neon arcade deck with 3D motion, glass panels, player history, and quick browser games.
+          </p>
+          <div class="platform-stats" aria-label="Platform highlights">
+            <div>
+              <strong>6</strong>
+              <span>Games</span>
+            </div>
+            <div>
+              <strong>3D</strong>
+              <span>UI</span>
+            </div>
+            <div>
+              <strong>OTP</strong>
+              <span>Auth</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="auth-panel tilt-card" aria-label="Authentication">
+          <div class="auth-tabs" role="tablist" aria-label="Authentication mode">
+            <button class="tab-btn active" id="loginTab" type="button" data-auth-mode="login" role="tab">
+              Login
+            </button>
+            <button class="tab-btn" id="signupTab" type="button" data-auth-mode="signup" role="tab">
+              Signup
+            </button>
+          </div>
+
+          <form id="authForm" class="auth-form">
+            <label>
+              <span>Email</span>
+              <input id="emailInput" type="email" autocomplete="email" placeholder="player@multigame.com" required />
+            </label>
+
+            <label>
+              <span>Password</span>
+              <input
+                id="passwordInput"
+                type="password"
+                autocomplete="current-password"
+                minlength="6"
+                placeholder="Minimum 6 characters"
+                required
+              />
+            </label>
+
+            <label id="confirmWrap" class="hidden">
+              <span>Confirm Password</span>
+              <input
+                id="confirmInput"
+                type="password"
+                autocomplete="new-password"
+                minlength="6"
+                placeholder="Repeat password"
+              />
+            </label>
+
+            <div class="otp-row">
+              <label>
+                <span>OTP</span>
+                <input id="otpInput" inputmode="numeric" maxlength="6" placeholder="000000" />
+              </label>
+              <button id="sendOtpBtn" class="btn secondary" type="button">Send OTP</button>
+            </div>
+
+            <div id="otpRelay" class="otp-relay hidden" aria-live="polite">
+              <span>OTP Relay</span>
+              <strong id="otpCode">------</strong>
+            </div>
+
+            <label id="rememberWrap" class="remember-line">
+              <input id="rememberInput" type="checkbox" checked />
+              <span>Remember this session</span>
+            </label>
+
+            <button id="authSubmitBtn" class="btn primary" type="submit">Enter Dashboard</button>
+          </form>
+        </section>
+      </section>
+
+      <section id="dashboardView" class="view dashboard-view" aria-labelledby="dashboardTitle">
+        <header class="topbar">
+          <div class="brand-lockup">
+            <div class="mini-logo">YP</div>
+            <div>
+              <p>Multi-Game</p>
+              <span>Owner: Yash Patel</span>
+            </div>
+          </div>
+
+          <div class="profile-chip">
+            <span id="profileEmail">player@multigame.com</span>
+            <button id="logoutBtn" class="icon-text-btn" type="button">Logout</button>
+          </div>
+        </header>
+
+        <div class="dashboard-grid">
+          <section class="hero-panel tilt-card">
+            <p class="eyebrow">Cyber Arcade Console</p>
+            <h2 id="dashboardTitle">Choose Your Game</h2>
+            <div class="hero-metrics" aria-label="Player statistics">
+              <div>
+                <span>Total Plays</span>
+                <strong id="totalPlays">0</strong>
+              </div>
+              <div>
+                <span>Best Score</span>
+                <strong id="bestScore">0</strong>
+              </div>
+              <div>
+                <span>Last Game</span>
+                <strong id="lastGame">None</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="history-panel tilt-card" aria-label="Game history">
+            <div class="section-title">
+              <div>
+                <p class="eyebrow">Timeline</p>
+                <h2>Game History</h2>
+              </div>
+              <button id="clearHistoryBtn" class="icon-btn" type="button" aria-label="Clear game history">×</button>
+            </div>
+            <div id="historyList" class="history-list"></div>
+          </section>
+        </div>
+
+        <section class="games-section" aria-label="Game selection">
+          <div id="gamesGrid" class="games-grid"></div>
+        </section>
+      </section>
+
+      <section id="gameView" class="view game-view" aria-label="Game arena">
+        <div id="gameShell" class="game-shell tilt-card">
+          <header class="game-bar">
+            <div>
+              <p class="eyebrow">Live Arena</p>
+              <h2 id="gameTitle">Game</h2>
+            </div>
+            <div class="score-strip" aria-label="Score board">
+              <span>Score <strong id="liveScore">0</strong></span>
+              <span>Best <strong id="liveBest">0</strong></span>
+            </div>
+            <div class="game-actions">
+              <button id="fullscreenBtn" class="icon-btn" type="button" aria-label="Fullscreen">⛶</button>
+              <button id="backBtn" class="icon-text-btn" type="button">Dashboard</button>
+            </div>
+          </header>
+
+          <div id="loadingLayer" class="loading-layer hidden" aria-live="polite">
+            <div class="loader-core"></div>
+            <span>Loading</span>
+          </div>
+
+          <div id="gameMount" class="game-mount"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
